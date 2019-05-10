@@ -1,0 +1,18 @@
+language: python
+
+python:
+  - "3.6"
+
+
+notifications:
+  email:
+    recipients:
+      - rp1615@ic.ac.uk
+    on_success: never
+    on_failure: always
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - pytest
