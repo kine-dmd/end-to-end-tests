@@ -14,8 +14,6 @@ notifications:
   email:
     recipients:
       - rohan.padmanabhan15@imperial.ac.uk
-      - rp1615@ic.ac.uk
-      - travis@padmanabhan.net #Temporary fake mail test
     on_success: never
     on_failure: always
 
