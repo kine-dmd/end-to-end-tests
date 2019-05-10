@@ -8,6 +8,7 @@ notifications:
   email:
     recipients:
       - rp1615@ic.ac.uk
+      - Somed1967@rhyta.com #Temporary fake mail test
     on_success: never
     on_failure: always
 
