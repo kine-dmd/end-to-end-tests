@@ -29,9 +29,8 @@ def test_transmission():
     
     # Query the recently added data
     query = AthenaQuery("eu-west-2")
-    query.send_query("mydatabase", "SELECT * FROM daily_test WHERE ts >= {}".format(rows[0].ts))
+    query.send_query("mydatabase", "SELECT * FROM daily_test WHERE ts >= {} ORDER BY ts ASC".format(rows[0].ts))
     result = query.wait_for_result()
-    
     
     # Check that retrieved data is the same as the sent data
     assert len(result) == len(rows)
