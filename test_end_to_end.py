@@ -9,7 +9,7 @@ def test_transmission():
     # Create the payload
     data = b""
     rows = []
-    for _ in range(100):
+    for _ in range(5 * 60 * 100):
         row = AppleWatch3Row()
         rows.append(row)
         data += row.binary_encode()
