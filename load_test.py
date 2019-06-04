@@ -35,9 +35,12 @@ def send_requests():
         url = "https://kine-dmd.co.uk/upload/apple-watch-3/" + uuid
         res = requests.post(url, data=binary_data)
         
-        # Log an error if one is received
-        if res.status_code != 200:
+        # Log an error if one occurs
+        if res.status_code == 200:
+            print("Successfully sent {}".format(uuid))
+        else:
             logging.error("Received status code {}. {}".format(res.status_code, res.text))
+
 
 def add_uuids_to_db():
     """
