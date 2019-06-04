@@ -7,7 +7,7 @@ install:
   - pip install -r requirements.txt
 
 script:
-  - pytest
+  - pytest test_end_to_end.py
 
 
 notifications:
