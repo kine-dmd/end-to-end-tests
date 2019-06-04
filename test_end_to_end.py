@@ -6,19 +6,12 @@ import os
 
 
 def test_transmission():
-    # Create the payload
-    data = b""
-    rows = []
-    for _ in range(5 * 60 * 100):
-        row = AppleWatch3Row()
-        rows.append(row)
-        data += row.binary_encode()
-    
+    binary_data, rows = create_payload()
     
     # Send the request
     file_number = "99"
     url = os.getenv('test_url')
-    res = requests.post(url, data=data, headers={"Content-Disposition": file_number})
+    res = requests.post(url, data=binary_data, headers={"Content-Disposition": file_number})
     
     # Check response code and file number acknowledgement
     assert res.status_code == 200
@@ -39,3 +32,14 @@ def test_transmission():
     
     # Delete the CSV results file
     query.cleanup_local_file()
+
+
+def create_payload():
+    # Create the payload
+    data = b""
+    rows = []
+    for _ in range(5 * 60 * 100):
+        row = AppleWatch3Row()
+        rows.append(row)
+        data += row.binary_encode()
+    return data, rows
