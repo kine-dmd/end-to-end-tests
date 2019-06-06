@@ -20,16 +20,18 @@ def connect_to_uuid_db():
 def send_requests():
     """
     Infinitely send requests to the server to test load capacity
-    :return:
+    :return: Never terminates
     """
     # Read in the list of test UUIDs from a CSV file
     uuids = generate_test_uuids()
+
+    # Create a binary data payload (just once for speed)
+    print("Beginning data generation")
+    binary_data, _ = create_payload(15 * 60 * 60)
     
     # Repeat until process is terminated
+    print("Beginning transmissions")
     while True:
-        # Create a binary data payload
-        binary_data, _ = create_payload()
-        
         # Send the request
         uuid = random.choice(uuids)
         url = "https://kine-dmd.co.uk/upload/apple-watch-3/" + uuid
