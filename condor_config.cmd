@@ -37,9 +37,6 @@ error           = err/stderr-$(Process).err
 # to a file we specify.  This specifies where that file should be written.
 log             = timelog.log
 
-# This specifies what commandline arguments should be passed to the executable.
-#arguments       = -n -m -p
-
 # This specifies that the specification, as parsed up to this point, should be 
 # submitted 5 times.  (If the number is omitted, the number '1' is assumed.)
-queue 5
+queue 50
