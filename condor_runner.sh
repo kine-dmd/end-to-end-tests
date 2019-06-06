@@ -5,7 +5,7 @@ set -e
 rm -rf /tmp/rp1615
 
 # Make a virtual environment specific to this PC
-python3 -m venv /tmp/rp1615/venv
+virtualenv -p /usr/bin/python3 /tmp/rp1615/venv
 
 # Activate the venv
 source /tmp/rp1615/venv/bin/activate
