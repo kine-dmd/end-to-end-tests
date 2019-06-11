@@ -25,9 +25,9 @@ def send_requests():
     # Read in the list of test UUIDs from a CSV file
     uuids = generate_test_uuids()
 
-    # Create a binary data payload (just once for speed)
+    # Create a binary payload of 1 hour's data (just once for speed)
     print("Beginning data generation")
-    binary_data, _ = create_payload(15 * 60 * 60)
+    binary_data, _ = create_payload(60 * 60 * 100)
     
     # Repeat until process is terminated
     print("Beginning transmissions")

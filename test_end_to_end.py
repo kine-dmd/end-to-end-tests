@@ -2,8 +2,6 @@ import time
 import requests
 from athena_query import AthenaQuery
 from apple_watch_3_row import AppleWatch3Row
-from functools import reduce
-
 
 def test_transmission():
     binary_data, rows = create_payload(5 * 60 * 100)
@@ -35,6 +33,7 @@ def test_transmission():
 
 
 def create_payload(num_rows):
-    rows = [AppleWatch3Row() for _ in range (num_rows)]
-    data = reduce(lambda x,y: x + y.binary_encode(), rows, b"")
+    # Make the rows and append the binary data together
+    rows = [AppleWatch3Row() for _ in range(num_rows)]
+    data = b"".join([row.binary_encode() for row in rows])
     return data, rows
