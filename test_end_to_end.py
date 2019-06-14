@@ -2,13 +2,15 @@ import time
 import requests
 from athena_query import AthenaQuery
 from apple_watch_3_row import AppleWatch3Row
+import os
 
 def test_transmission():
-    binary_data, rows = create_payload(5 * 60 * 100)
+    # Create one hour of data
+    binary_data, rows = create_payload(60 * 60 * 100)
     
     # Send the request
     file_number = "99"
-    url = "https://kine-dmd.co.uk/upload/apple-watch-3/00000000-0000-0000-0000-000000000000" #os.getenv('test_url')
+    url = os.getenv('test_url')
     res = requests.post(url, data=binary_data, headers={"Content-Disposition": file_number})
     
     # Check response code and file number acknowledgement
