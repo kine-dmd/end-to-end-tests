@@ -10,7 +10,7 @@ import sys
 PROPAGATION_WARNING = "Note this may take up to 2 hours to propagate to all instances."
 
 def generate_test_uuids():
-    return ["00000000-0000-0000-0000-0000000001{:02d}".format(i) for i in range(50)]
+    return ["00000000-0000-0000-0000-000000001{:03d}".format(i) for i in range(300)]
 
 
 def connect_to_uuid_db():
@@ -52,14 +52,19 @@ def add_uuids_to_db():
     # Connect to the table in DynamoDB)
     uuid_db =  connect_to_uuid_db()
 
-    # Add a row for each uuid generated
-    with uuid_db.batch_writer(overwrite_by_pkeys=['uuid']) as batch_writer:
-        for uuid in generate_test_uuids():
-            row = {'uuid': uuid,
-                   'patientId': ''.join(random.choice(string.ascii_letters) for _ in range(5)),
-                   'limb': random.choice(range(4))}
-            
-            batch_writer.put_item(Item=row)
+    # Write data in batches of 10
+    uuids = generate_test_uuids()
+    for i in range(0, len(uuids), 10):
+        uuid_subset = uuids[i: i + 10]
+    
+        # Add all of the test rows in the database
+        with uuid_db.batch_writer(overwrite_by_pkeys=['uuid']) as batch_writer:
+            for uuid in uuid_subset:
+                row = {'uuid': uuid,
+                       'patientId': ''.join(random.choice(string.ascii_letters) for _ in range(5)),
+                       'limb': random.choice(range(4))}
+                
+                batch_writer.put_item(Item=row)
     
     print("Adding UUIDs complete. {}".format(PROPAGATION_WARNING))
 
@@ -68,14 +73,19 @@ def delete_uuids_from_db():
     # Connect to the table in DynamoDB
     uuid_db = connect_to_uuid_db()
     
-    # Delete all of the test rows in the database
-    with uuid_db.batch_writer(overwrite_by_pkeys=['uuid']) as batch_writer:
-        for uuid in generate_test_uuids():
-            batch_writer.delete_item(
-                Key={
-                    'uuid': uuid
-                }
-            )
+    # Write data in batches of 10
+    uuids = generate_test_uuids()
+    for i in range(0, len(uuids), 10):
+        uuid_subset = uuids[i: i+10]
+    
+        # Delete all of the test rows in the database
+        with uuid_db.batch_writer(overwrite_by_pkeys=['uuid']) as batch_writer:
+            for uuid in uuid_subset:
+                batch_writer.delete_item(
+                    Key={
+                        'uuid': uuid
+                    }
+                )
 
     print("Deleting UUIDs complete. {}".format(PROPAGATION_WARNING))
 

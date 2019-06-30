@@ -1,4 +1,6 @@
 import csv
+import random
+
 import boto3
 import time
 import os
@@ -57,7 +59,7 @@ class AthenaQuery(object):
                 return None
         
             # Download the file
-            self.local_location = "results-{}.csv".format(int(time.time() * 10**9))
+            self.local_location = "results-{}.csv".format(random.randint(0, 10**10))
             with open(self.local_location, 'wb') as f:
                 # Remove s3:// prefix and split bucket name from path
                 s3_bucket, s3_path = s3_loc[5:].split('/', 1)
