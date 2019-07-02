@@ -13,7 +13,7 @@ script:
 notifications:
   email:
     recipients:
-      - rohan.padmanabhan15@imperial.ac.uk
+      - bkadirve@imperial.ac.uk
     on_success: never
     on_failure: always
 
